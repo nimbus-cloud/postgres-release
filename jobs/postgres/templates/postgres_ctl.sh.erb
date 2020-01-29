@@ -26,6 +26,23 @@ function main() {
         exit 1
       fi
 
+      <% if p("databases.master") %>
+        # make sure recovery.conf is not on master
+        if [ -f $DATA_DIR/recovery.conf ]; then
+          rm $DATA_DIR/recovery.conf
+        fi
+        <% else %>
+        # initial full copy from master
+        # run only on slave for the first time
+        if [ ! -f $DATA_DIR/postgresql.conf ]; then
+          su - vcap -c "echo <%= p("databases.replication_password") %> | $PACKAGE_DIR/bin/pg_basebackup -h <%= p("databases.replication_node2") %> -D $DATA_DIR -U <%= p("databases.replication_user") %> -v -P -X stream"
+          chmod -R 0700 $DATA_DIR
+        fi
+
+        cp $JOB_DIR/config/recovery.conf $DATA_DIR
+        chown vcap:vcap $DATA_DIR/recovery.conf
+      <% end %>
+
       if [ -d "${DATA_DIR_OLD}" -a -f "${DATA_DIR_OLD}/postgresql.conf" ]; then
         set +e
         "${PACKAGE_DIR}/bin/pg_ctl" stop -m fast -w -D ${DATA_DIR}

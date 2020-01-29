@@ -9,6 +9,7 @@ templates:
   pg_janitor_ctl.sh.erb: bin/pg_janitor_ctl
   pg_janitor.sh.erb: bin/pg_janitor.sh
   postgres_start.sh.erb: bin/postgres_start.sh
+  recovery.conf.erb: bin/recovery.conf
   pgconfig.sh.erb: bin/pgconfig.sh
   utils.sh.erb: bin/utils.sh
   postgresql.conf.erb: config/postgresql.conf
@@ -118,6 +119,20 @@ properties:
   databases.enable_trace:
     description: "Print additional traces in control scripts"
     default: false
+  
+  ### Replication fork start
+  databases.master:
+    description: "Boolean: wheather or not a node is replication master"
+  databases.replication_node1:
+    description: "Ip address of this machine"
+  databases.replication_node2:
+    description: "Ip address of the other machine taking part in replication"
+  databases.replication_user:
+    description: "Replication user"
+  databases.replication_password:
+    description: "Replication password"
+  ### Replication fork end
+
   janitor.script:
     description: "If specified, janitor would periodically run this script"
     default: ''

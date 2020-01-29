@@ -20,6 +20,23 @@ function main() {
   <% end %>
 }
 
+function replication_slot() {
+  <% if p("databases.master") %>
+      # create replication slot on master
+      set +e
+      $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
+                          -c "SELECT pg_create_physical_replication_slot('nimbus_replication_slot')"
+      set -e
+  <% else %>
+      # make sure there is no replication slot on slave
+      set +e
+      $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
+                          -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
+      set -e
+  <% end %>
+}
+
 
 main
+replication_slot
 echo "" > "${CONTROL_JOB_PIDFILE}"
