@@ -9,7 +9,7 @@ templates:
   pg_janitor_ctl.sh.erb: bin/pg_janitor_ctl
   pg_janitor.sh.erb: bin/pg_janitor.sh
   postgres_start.sh.erb: bin/postgres_start.sh
-  recovery.conf.erb: bin/recovery.conf
+  recovery.conf.erb: config/recovery.conf
   pgconfig.sh.erb: bin/pgconfig.sh
   utils.sh.erb: bin/utils.sh
   postgresql.conf.erb: config/postgresql.conf
