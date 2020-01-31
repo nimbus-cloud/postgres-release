@@ -6,6 +6,8 @@ function main() {
 
   cp "${JOB_DIR}/config/postgresql.conf" "${JOB_DIR}/config/pg_hba.conf" "${JOB_DIR}/config/pg_ident.conf" "${DATA_DIR}"
 
+  replication_slot_setup
+
   <% unless p("databases.hooks.pre_start").empty? %>
   ${JOB_DIR}/bin/hooks/call-hooks.sh "pre-start"
   <% end %>
@@ -20,7 +22,7 @@ function main() {
   <% end %>
 }
 
-function replication_slot() {
+function replication_slot_setup() {
   <% if p("databases.master") %>
       # create replication slot on master
       set +e
@@ -38,5 +40,4 @@ function replication_slot() {
 
 
 main
-replication_slot
 echo "" > "${CONTROL_JOB_PIDFILE}"
