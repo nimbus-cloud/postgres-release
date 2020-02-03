@@ -7,6 +7,7 @@ function main() {
   cp "${JOB_DIR}/config/postgresql.conf" "${JOB_DIR}/config/pg_hba.conf" "${JOB_DIR}/config/pg_ident.conf" "${DATA_DIR}"
 
   replication_slot_setup
+  init_data_dir
 
   <% unless p("databases.hooks.pre_start").empty? %>
   ${JOB_DIR}/bin/hooks/call-hooks.sh "pre-start"
@@ -30,11 +31,12 @@ function replication_slot_setup() {
                           -c "SELECT pg_create_physical_replication_slot('nimbus_replication_slot')"
       set -e
   <% else %>
-      # make sure there is no replication slot on slave
-      set +e
-      $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
-                          -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
-      set -e
+      # # make sure there is no replication slot on slave
+      # set +e
+      # $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
+      #                     -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
+      # set -e
+      :
   <% end %>
 }
 
