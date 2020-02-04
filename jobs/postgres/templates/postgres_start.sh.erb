@@ -7,7 +7,7 @@ function main() {
   <% if p("databases.master") %>
   # make sure recovery.conf is not on master
   if [ -f $JOB_DIR/config/recovery.conf ]; then
-    rm $JOB_DIR/config/recovery.conf
+    su rm $JOB_DIR/config/recovery.conf
   fi
   <% else %>
   # initial full copy from master
@@ -43,11 +43,10 @@ function main() {
   set -e
   <% else %>
   # make sure there is no replication slot on slave
-  # set +e
-  # $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
-  #                     -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
-  # set -e
-  :
+  set +e
+  $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
+                      -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
+  set -e
   <% end %>
   <% unless p("databases.hooks.post_start").empty? %>
 
