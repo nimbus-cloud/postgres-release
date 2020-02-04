@@ -47,6 +47,7 @@ function main() {
   $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
                       -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
   set -e
+  <% end %>
   <% unless p("databases.hooks.post_start").empty? %>
 
   ${JOB_DIR}/bin/hooks/call-hooks.sh "post-start"
