@@ -4,10 +4,11 @@ function main() {
   source /var/vcap/jobs/postgres/bin/pgconfig.sh
   source /var/vcap/jobs/postgres/bin/utils.sh
 
+  chown vcap:vcap $JOB_DIR/config/recovery.conf
   <% if p("databases.master") %>
   # make sure recovery.conf is not on master
   if [ -f $JOB_DIR/config/recovery.conf ]; then
-    su - vcap -c "rm $JOB_DIR/config/recovery.conf"
+    rm $JOB_DIR/config/recovery.conf
   fi
   <% else %>
   # initial full copy from master
@@ -18,7 +19,6 @@ function main() {
   fi
 
   cp $JOB_DIR/config/recovery.conf $DATA_DIR
-  chown vcap:vcap $DATA_DIR/recovery.conf
   <% end %>
 
   cp "${JOB_DIR}/config/postgresql.conf" "${JOB_DIR}/config/pg_hba.conf" "${JOB_DIR}/config/pg_ident.conf" "${DATA_DIR}"
