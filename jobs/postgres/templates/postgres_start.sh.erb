@@ -4,7 +4,8 @@ function main() {
   source /var/vcap/jobs/postgres/bin/pgconfig.sh
   source /var/vcap/jobs/postgres/bin/utils.sh
 
-  chown vcap:vcap $JOB_DIR/config/recovery.conf
+  init_data_dir
+  
   <% if p("databases.master") %>
   # make sure recovery.conf is not on master
   if [ -f $JOB_DIR/config/recovery.conf ]; then
@@ -18,12 +19,12 @@ function main() {
     chmod -R 0700 $JOB_DIR/config
   fi
 
+  chown vcap:vcap $JOB_DIR/config/recovery.conf
   cp $JOB_DIR/config/recovery.conf $DATA_DIR
   <% end %>
 
   cp "${JOB_DIR}/config/postgresql.conf" "${JOB_DIR}/config/pg_hba.conf" "${JOB_DIR}/config/pg_ident.conf" "${DATA_DIR}"
 
-  init_data_dir
 
   <% unless p("databases.hooks.pre_start").empty? %>
   ${JOB_DIR}/bin/hooks/call-hooks.sh "pre-start"
