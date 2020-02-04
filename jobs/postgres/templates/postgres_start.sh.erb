@@ -7,7 +7,7 @@ function main() {
   <% if p("databases.master") %>
   # make sure recovery.conf is not on master
   if [ -f $JOB_DIR/config/recovery.conf ]; then
-    su rm $JOB_DIR/config/recovery.conf
+    su - vcap -c "rm $JOB_DIR/config/recovery.conf"
   fi
   <% else %>
   # initial full copy from master
