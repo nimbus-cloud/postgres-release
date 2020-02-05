@@ -34,7 +34,7 @@ function enable_recovery_conf() {
     # initial full copy from master
     # run only on slave for the first time
     if [ ! -f $DATA_DIR/postgresql.conf ]; then
-      su - vcap -c "$PACKAGE_DIR/bin/pg_basebackup -h <%= p("databases.replication_node2") %> -D $DATA_DIR -U <%= p("databases.replication_user") %> -P -Xs"
+      su - vcap -c "$PACKAGE_DIR/bin/pg_basebackup -h <%= p("databases.replication_node2") %> -D $DATA_DIR -U <%= p("databases.replication_user") %> -v -P -Xs"
 #      su - vcap -c "echo <%= p("databases.replication_password") %> | $PACKAGE_DIR/bin/pg_basebackup -h <%= p("databases.replication_node2") %> -D $JOB_DIR/config -U <%= p("databases.replication_user") %> -P -Xs -R"
       chmod -R 0700 $DATA_DIR
     fi

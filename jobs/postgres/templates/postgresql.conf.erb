@@ -64,6 +64,7 @@ wal_keep_segments = 8
 max_replication_slots = 1
 <% unless p("databases.master") %>
 archive_mode = 'ON'
+archive_command = 'test ! -f /var/vcap/store/archive/%f && cp %p /var/vcap/store/archive/%f'
 wal_level = hot_standby
 listen_addresses = *
 hot_standby = on
