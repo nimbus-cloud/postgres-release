@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source /var/vcap/jobs/postgres/bin/pgconfig.sh
+
+export TIMESTAMP=`date +%Y%m%d-%H%M`
+
+mkdir -p $BACKUP_DIR
+
+echo "Backup starting: `date`"
+$PACKAGE_DIR/bin/pg_dumpall -U vcap -p <%= p("databases.port") %> | gzip -c > $BACKUP_DIR/$TIMESTAMP.all.dbs.out.gz
+echo "Backup completed: `date`"
+
+echo "Cleaning up backups older than <%= p("databases.backup.retention_days") %> days.."
+find $BACKUP_DIR -mtime +<%= p("databases.backup.retention_days") %> -exec rm -rvf {} \;
+
+echo "Done."
