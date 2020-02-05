@@ -26,12 +26,10 @@ function create_roles() {
 
 function enable_recovery_conf() {
   <% if p("databases.master") %>
-    su - vcap <<EOF
     # make sure recovery.conf is not on master
     if [ -f $JOB_DIR/config/recovery.conf ]; then
-      rm $JOB_DIR/config/recovery.conf
+      sudo rm $JOB_DIR/config/recovery.conf
     fi
-EOF
   <% else %>
     # initial full copy from master
     # run only on slave for the first time
