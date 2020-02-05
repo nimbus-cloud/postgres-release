@@ -2,6 +2,4 @@
 standby_mode = 'on'
 primary_conninfo = 'host=<%= p("databases.replication_node2") %> port=<%= p("databases.port") %> user=<%= p("databases.replication_user") %> password=<%= p("databases.replication_password") %>'
 primary_slot_name = 'nimbus_replication_slot'
-restore_command = 'cp /var/vcap/store/archive/%f %p'
-archive_cleanup_command = 'pg_archivecleanup /var/vcap/store/archive %r'
 # trigger_file = '/tmp/postgresql.trigger.5432'
