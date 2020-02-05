@@ -53,10 +53,11 @@ function create_recovery_slot_master() {
     set -e
   <% else %>
     # make sure there is no replication slot on slave
-    set +e
-    $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
-                        -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
-    set -e
+    # set +e
+    # $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
+    #                     -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
+    # set -e
+    :
   <% end %>
 }
 
