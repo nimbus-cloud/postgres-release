@@ -5,8 +5,9 @@ function main() {
   source /var/vcap/jobs/postgres/bin/utils.sh
 
   init_data_dir
-  
+
   <% if p("databases.master") %>
+  su - vcap <<EOF
   # make sure recovery.conf is not on master
   if [ -f $JOB_DIR/config/recovery.conf ]; then
     rm $JOB_DIR/config/recovery.conf
