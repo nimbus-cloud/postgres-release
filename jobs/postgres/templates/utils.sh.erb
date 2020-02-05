@@ -25,8 +25,6 @@ function create_roles() {
 }
 
 function enable_recovery_conf() {
-  chown vcap:vcap $JOB_DIR/config/recovery.conf
-
   <% if p("databases.master") %>
     # make sure recovery.conf is not on master
     if [ -f $JOB_DIR/config/recovery.conf ]; then
@@ -40,7 +38,7 @@ function enable_recovery_conf() {
       chmod -R 0700 $JOB_DIR/config
     fi
 
-    
+    chown vcap:vcap $JOB_DIR/config/recovery.conf
     cp $JOB_DIR/config/recovery.conf $DATA_DIR
   <% end %>
 }
