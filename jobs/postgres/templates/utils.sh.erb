@@ -24,6 +24,41 @@ function create_roles() {
     -d "postgres" -c "\set ON_ERROR_STOP on" -f "${JOB_DIR}/config/roles.sql"
 }
 
+function enable_recovery_conf() {
+  <% if p("databases.master") %>
+    # make sure recovery.conf is not on master
+    if [ -f $JOB_DIR/config/recovery.conf ]; then
+      rm $JOB_DIR/config/recovery.conf
+    fi
+  <% else %>
+    # initial full copy from master
+    # run only on slave for the first time
+    if [ ! -f $JOB_DIR/config/postgresql.conf ]; then
+      su - vcap -c "echo <%= p("databases.replication_password") %> | $PACKAGE_DIR/bin/pg_basebackup -h <%= p("databases.replication_node2") %> -D $JOB_DIR/config -U <%= p("databases.replication_user") %> -v -P -X stream"
+      chmod -R 0700 $JOB_DIR/config
+  fi
+
+  chown vcap:vcap $JOB_DIR/config/recovery.conf
+  cp $JOB_DIR/config/recovery.conf $DATA_DIR
+  <% end %>
+}
+
+function create_recovery_slot_master() {
+  <% if p("databases.master") %>
+    # create replication slot on master
+    set +e
+    $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
+                        -c "SELECT pg_create_physical_replication_slot('nimbus_replication_slot')"
+    set -e
+  <% else %>
+    # make sure there is no replication slot on slave
+    set +e
+    $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
+                        -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
+    set -e
+  <% end %>
+}
+
 function create_databases() {
   echo "Creating databases..."
   <% p("databases.databases", []).each do |database| %>
