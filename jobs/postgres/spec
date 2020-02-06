@@ -16,9 +16,6 @@ templates:
   recovery.conf.erb: config/recovery.conf
   pg_ident.conf.erb: config/pg_ident.conf
   roles.sql.erb: config/roles.sql
-  postgres_backup.cron.erb: config/postgres_backup.cron
-  postgres_backup.erb: bin/postgres_backup
-  pg_backup.sh.erb: bin/pg_backup.sh
   server.private_key.erb: config/certificates/server.private_key
   server.public_cert.erb: config/certificates/server.public_cert
   server.ca_cert.erb: config/certificates/server.ca_cert
@@ -135,16 +132,6 @@ properties:
   databases.replication_password:
     description: "Replication password"
   ### Replication fork end
-
-  ### Backup for replication
-  databases.backup.enable:
-    default: false
-  databases.backup.cron_interval:
-    default: 0 7 * * *
-  databases.backup.retention_days:
-    default: 30
-  databases.backup.mount_point:
-    default: "/var/vcap/services_backup"
 
   janitor.script:
     description: "If specified, janitor would periodically run this script"
