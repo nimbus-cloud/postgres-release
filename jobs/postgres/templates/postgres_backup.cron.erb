@@ -1,2 +1,0 @@
-source /var/vcap/jobs/postgres/bin/pgconfig.sh
-<%= p("databases.backup.cron_interval") %> $JOB_DIR/bin/pg_backup.sh >> $LOG_DIR/postgres_backup_cron.log 2>&1
