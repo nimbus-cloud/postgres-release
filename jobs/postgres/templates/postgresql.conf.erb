@@ -1,22 +1,22 @@
-<%
-p("databases.roles", []).each do |role|
-	if role["password"].nil?
-		missing_property = ''
-		if p("databases.tls").nil?
-			missing_property = 'databases.tls'
-		elsif p("databases.tls.ca").to_s == ""
-			missing_property = 'databases.tls.ca'
-		elsif p("databases.tls.certificate").to_s == ""
-			missing_property = 'databases.tls.certificate'
-		elsif p("databases.tls.private_key").to_s == ""
-			missing_property = 'databases.tls.private_key'
-		end
-		if missing_property != ''
-			raise "Role #{role["name"]} defined without a password but '#{missing_property}' property is not present"
-		end
-	end
-end
-%>
+# <%
+# p("databases.roles", []).each do |role|
+# 	if role["password"].nil?
+# 		missing_property = ''
+# 		if p("databases.tls").nil?
+# 			missing_property = 'databases.tls'
+# 		elsif p("databases.tls.ca").to_s == ""
+# 			missing_property = 'databases.tls.ca'
+# 		elsif p("databases.tls.certificate").to_s == ""
+# 			missing_property = 'databases.tls.certificate'
+# 		elsif p("databases.tls.private_key").to_s == ""
+# 			missing_property = 'databases.tls.private_key'
+# 		end
+# 		if missing_property != ''
+# 			raise "Role #{role["name"]} defined without a password but '#{missing_property}' property is not present"
+# 		end
+# 	end
+# end
+# %>
 # Control the available listen_addresses via
 # deployment manifest - add networks to the job
 #
@@ -56,7 +56,6 @@ lc_numeric = 'en_US.UTF-8'
 lc_time = 'en_US.UTF-8'
 
 default_text_search_config = 'pg_catalog.english'
-default_transaction_read_only = off
 
 # replication
 max_wal_senders = 3

@@ -10,13 +10,15 @@ host    all             all             ::1/128                 trust
 <% end %>
 host    replication     <%= p("databases.replication_user") %>      <%= p("databases.replication_node2") %>/0               md5
 <% p("databases.roles", []).each do |role| %>
-<%=
-	line=nil
-	unless role["password"]
-		line = "hostssl all  #{role["name"]} 0.0.0.0/0 cert clientcert=1 "
-		line << 'map=cnmap' if role["common_name"]
-	end
-	line
-%>
+host    all  <%= role["name"] %> 0.0.0.0/0 md5
 <% end %>
+# <%=
+# 	line=nil
+# 	unless role["password"]
+# 		line = "hostssl all  #{role["name"]} 0.0.0.0/0 cert clientcert=1 "
+# 		line << 'map=cnmap' if role["common_name"]
+# 	end
+# 	line
+# %>
+# <% end %>
 host    all             all             0.0.0.0/0               md5
