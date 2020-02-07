@@ -4,7 +4,7 @@ ENABLE_TRACE=1
 set -x # if you want tracing disabled, set 'databases.enable_traces: false' in the manifest
 <% else %>
 ENABLE_TRACE=0
-# set -x # uncomment it if you want to enable tracing in all control scripts
+set -x # uncomment it if you want to enable tracing in all control scripts
 <% end %>
 current_version="11.6"
 pgversion_current="postgres-${current_version}"
