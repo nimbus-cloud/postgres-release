@@ -48,8 +48,7 @@ function create_recovery_slot_master() {
   <% if p("databases.master") %>
     # create replication slot on master
     set +e
-    $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
-                        -c "SELECT pg_create_physical_replication_slot('nimbus_replication_slot')"
+    $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres -c "SELECT pg_create_physical_replication_slot('nimbus_replication_slot')"
     set -e
   <% else %>
     # make sure there is no replication slot on slave
