@@ -24,7 +24,7 @@ function create_roles() {
     -d "postgres" -c "\set ON_ERROR_STOP on" -f "${JOB_DIR}/config/roles.sql"
 }
 
-function enable_recovery_conf() {
+function enable_recovery_conf_slave() {
   <% if p("databases.master") %>
     # make sure recovery.conf is not on master
     if [ -f $DATA_DIR/recovery.conf ]; then
