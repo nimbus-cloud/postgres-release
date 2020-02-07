@@ -12,7 +12,7 @@ function main() {
   ${JOB_DIR}/bin/hooks/call-hooks.sh "pre-start"
   <% end %>
 
-  #create_recovery_slot_master  # fork
+  create_recovery_slot_master  # fork
 
   echo "Starting PostgreSQL: "
   "${PACKAGE_DIR}/bin/pg_ctl" -o "-h ${HOST} -p ${PORT}" \
