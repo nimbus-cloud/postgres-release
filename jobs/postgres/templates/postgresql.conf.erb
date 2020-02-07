@@ -63,7 +63,6 @@ wal_keep_segments = 8
 max_replication_slots = 1
 <% unless p("databases.master") %>
 wal_level = hot_standby
-listen_addresses = *
 hot_standby = on
 hot_standby_feedback = on
 <% end %>
