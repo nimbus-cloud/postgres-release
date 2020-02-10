@@ -44,6 +44,13 @@ function enable_recovery_conf_slave() {
   <% end %>
 }
 
+function create_and_stream_data_dir(){
+  <% if p("databases.master") %>
+    psql -U "vcap" -d "postgres" -c "SELECT pg_start_backup('base backup for streaming rep')" 
+    rsync -cva --inplace --exclude=*pg_xlog* ${PGDATA}/ <% p("replication_node2") %>:$PGDATA 
+    psql -U "vcap" -d "postgres" -c "SELECT pg_stop_backup(), current_timestamp" 
+  }
+
 function create_recovery_slot_master() {
   <% if p("databases.master") %>
     # create replication slot on master
@@ -54,7 +61,7 @@ function create_recovery_slot_master() {
     # make sure there is no replication slot on slave
     # set +e
     # $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
-                         -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
+                        #  -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
     # set -e
     :
   <% end %>
