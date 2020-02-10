@@ -1,6 +1,37 @@
 # postgres-release
 ---
 
+# FOR NIMBUS NEW DEPLOYEMENTS. READ CAREFULLY.
+For numerous reasons, namely the multi dc bosh deployment, once deployed, you need to manually move data dirs between master and slough for replication.
+
+```
+./deploy test hemel
+./deploy test slough
+
+## SLAVE
+# Stop slave postgres
+monit postgres stop
+
+
+## MASTER
+# Create backup of all tables and users
+/var/vcap/packages/postgres-11.6/bin/pg_dumpall -U vcap -p 5432 | gzip -c > /var/vcap/store/postgres/postgres-11.6/backups.all.dbs.out.gz
+
+# Rsync to slave node. Password for vcap user in jenkins_cf/.kitchen.yml
+rsync -cva --inplace --exclude=*pg_xlog* /var/vcap/store/postgres/postgres-11.6/ vcap@10.92.245.112:/var/vcap/store/postgres/postgres-11.6/
+
+
+## SLAVE
+# Unzip
+gunzip  /var/vcap/store/postgres/postgres-11.6/backups.all.dbs.out.gz
+
+# Start
+monit postgres start
+
+```
+Nothing special needs to be done with failover. Demote master first, the premote slave after.
+---
+
 This is a [BOSH](https://www.bosh.io) release for [PostgreSQL](https://www.postgresql.org/).
 
 ## Contents
