@@ -16,9 +16,8 @@ function main() {
     -w start -D "${DATA_DIR}" -l "${LOG_DIR}/startup.log"
 
   echo "PostgreSQL started successfully"
-  
+
   create_recovery_slot_master  # fork
-  create_and_stream_data_dir   # fork
   enable_recovery_conf_slave   # fork
 
   <% unless p("databases.hooks.post_start").empty? %>
