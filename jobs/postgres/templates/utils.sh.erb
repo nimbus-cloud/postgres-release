@@ -49,7 +49,8 @@ function create_and_stream_data_dir(){
     psql -U "vcap" -d "postgres" -c "SELECT pg_start_backup('base backup for streaming rep')" 
     rsync -cva --inplace --exclude=*pg_xlog* ${PGDATA}/ <% p("replication_node2") %>:$PGDATA 
     psql -U "vcap" -d "postgres" -c "SELECT pg_stop_backup(), current_timestamp" 
-  }
+  <% end %>
+}
 
 function create_recovery_slot_master() {
   <% if p("databases.master") %>
