@@ -58,10 +58,12 @@ lc_time = 'en_US.UTF-8'
 default_text_search_config = 'pg_catalog.english'
 default_transaction_read_only = off
 
+log_connections = on
+
 # replication
 max_wal_senders = 3
 wal_keep_segments = 8
-max_replication_slots = 1
+max_replication_slots = 3
 <% unless p("databases.master") %>
 wal_level = hot_standby
 hot_standby = on
