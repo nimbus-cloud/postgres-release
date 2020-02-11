@@ -17,13 +17,11 @@ function pgexec() {
 }
 
 function create_roles() {
-  <% if p("databases.master") %>
     echo "Creating roles..."
     "${PACKAGE_DIR}/bin/psql" \
       -U "vcap" \
       -p "${PORT}" \
       -d "postgres" -c "\set ON_ERROR_STOP on" -f "${JOB_DIR}/config/roles.sql"
-  <% end %>
 }
 
 function remove_recovery_conf_master() {
