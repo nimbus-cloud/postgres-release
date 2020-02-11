@@ -26,23 +26,12 @@ function create_roles() {
   <% end %>
 }
 
-function enable_recovery_conf_slave() {
+function remove_recovery_conf_master() {
   <% if p("databases.master") %>
     # make sure recovery.conf is not on master
     if [ -f $DATA_DIR/recovery.conf ]; then
       rm $DATA_DIR/recovery.conf
     fi
-  <% else %>
-    # initial full copy from master
-    # run only on slave for the first time
-    if [ ! -f $DATA_DIR/postgresql.conf ]; then
-      su - vcap -c "echo <%= p("databases.replication_password") %> | $PACKAGE_DIR/bin/pg_basebackup -h <%= p("databases.replication_node2") %> -D $DATA_DIR -U <%= p("databases.replication_user") %> -v -P -Xs"
-      chmod -R 0700 $DATA_DIR
-    fi
-    
-    cp $JOB_DIR/config/recovery.conf $DATA_DIR
-    chown vcap:vcap $DATA_DIR/recovery.conf
-    
   <% end %>
 }
 

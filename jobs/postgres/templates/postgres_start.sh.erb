@@ -4,6 +4,11 @@ function main() {
   source /var/vcap/jobs/postgres/bin/pgconfig.sh
   source /var/vcap/jobs/postgres/bin/utils.sh
 
+  <% if p("databases.master") %>
+  cp $JOB_DIR/config/recovery.conf $DATA_DIR
+    chown vcap:vcap $DATA_DIR/recovery.conf
+  <% end %>
+
   cp "${JOB_DIR}/config/postgresql.conf" "${JOB_DIR}/config/pg_hba.conf" "${JOB_DIR}/config/pg_ident.conf" "${DATA_DIR}"
 
   <% unless p("databases.hooks.pre_start").empty? %>
@@ -18,7 +23,7 @@ function main() {
   echo "PostgreSQL started successfully"
 
   create_recovery_slot_master  # fork
-  enable_recovery_conf_slave   # fork
+  remove_recovery_conf_master   # fork
 
   <% unless p("databases.hooks.post_start").empty? %>
   ${JOB_DIR}/bin/hooks/call-hooks.sh "post-start"
