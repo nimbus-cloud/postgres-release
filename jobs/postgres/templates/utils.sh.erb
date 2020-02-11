@@ -23,8 +23,6 @@ function create_roles() {
       -U "vcap" \
       -p "${PORT}" \
       -d "postgres" -c "\set ON_ERROR_STOP on" -f "${JOB_DIR}/config/roles.sql"
-  <% else %>
-    :
   <% end %>
 }
 
