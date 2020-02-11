@@ -17,36 +17,36 @@ function pgexec() {
 }
 
 function create_roles() {
-    echo "Creating roles..."
+    echo "Creating roles..." \
     "${PACKAGE_DIR}/bin/psql" \
       -U "vcap" \
       -p "${PORT}" \
       -d "postgres" -c "\set ON_ERROR_STOP on" -f "${JOB_DIR}/config/roles.sql"
 }
 
-function remove_recovery_conf_master() {
-  <% if p("databases.master") %>
-    # make sure recovery.conf is not on master
-    if [ -f $DATA_DIR/recovery.conf ]; then
-      rm $DATA_DIR/recovery.conf
-    fi
-  <% end %>
-}
+# function remove_recovery_conf_master() {
+#   <% if p("databases.master") %>
+#     # make sure recovery.conf is not on master
+#     if [ -f $DATA_DIR/recovery.conf ]; then
+#       rm $DATA_DIR/recovery.conf
+#     fi
+#   <% end %>
+# }
 
-function create_recovery_slot_master() {
-  <% if p("databases.master") %>
-    # create replication slot on master
-    set +e
-    $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres -c "SELECT pg_create_physical_replication_slot('nimbus_replication_slot')"
-    set -e
-  <% else %>
-    make sure there is no replication slot on slave
-    set +e
-    $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
-                         -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
-    set -e
-  <% end %>
-}
+# function create_recovery_slot_master() {
+#   <% if p("databases.master") %>
+#     # create replication slot on master
+#     set +e
+#     $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres -c "SELECT pg_create_physical_replication_slot('nimbus_replication_slot')"
+#     set -e
+#   <% else %>
+#     make sure there is no replication slot on slave
+#     set +e
+#     $PACKAGE_DIR/bin/psql -U vcap -p $PORT -d postgres \
+#                          -c "SELECT pg_drop_replication_slot('nimbus_replication_slot')"
+#     set -e
+#   <% end %>
+# }
 
 function create_databases() {
   echo "Creating databases..."
