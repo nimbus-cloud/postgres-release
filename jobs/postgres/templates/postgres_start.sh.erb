@@ -9,10 +9,11 @@ function main() {
 
   cp "${JOB_DIR}/config/postgresql.conf" "${JOB_DIR}/config/pg_hba.conf" "${JOB_DIR}/config/pg_ident.conf" "${DATA_DIR}"
 
+  remove_recovery_conf_master   # fork
+
   <% unless p("databases.hooks.pre_start").empty? %>
   ${JOB_DIR}/bin/hooks/call-hooks.sh "pre-start"
   <% end %>
-
 
   echo "Starting PostgreSQL: "
   "${PACKAGE_DIR}/bin/pg_ctl" -o "-h ${HOST} -p ${PORT}" \
@@ -20,8 +21,7 @@ function main() {
 
   echo "PostgreSQL started successfully"
 
-  create_recovery_slot_master  # fork
-  remove_recovery_conf_master   # fork
+  # create_recovery_slot_master  # fork
 
   <% unless p("databases.hooks.post_start").empty? %>
   ${JOB_DIR}/bin/hooks/call-hooks.sh "post-start"
