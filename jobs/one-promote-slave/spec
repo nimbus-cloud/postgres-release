@@ -12,3 +12,8 @@ provides:
   type: database
   properties:
     databases.replication_node2
+
+properties:
+  databases.replication_node2:
+    description: "IP address of slave node you wishe to promote"
+    
