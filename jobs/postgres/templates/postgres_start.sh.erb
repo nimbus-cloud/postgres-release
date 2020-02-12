@@ -4,14 +4,8 @@ function main() {
   source /var/vcap/jobs/postgres/bin/pgconfig.sh
   source /var/vcap/jobs/postgres/bin/utils.sh
   
-  cp "${JOB_DIR}/config/recovery.conf" "${JOB_DIR}/config/postgresql.conf" "${JOB_DIR}/config/pg_hba.conf" "${JOB_DIR}/config/pg_ident.conf" "${DATA_DIR}"
+  cp "${JOB_DIR}/config/postgresql.conf" "${JOB_DIR}/config/pg_hba.conf" "${JOB_DIR}/config/pg_ident.conf" "${DATA_DIR}"
   chown vcap:vcap ${DATA_DIR}/recovery.conf
-
-  <% if p("databases.master") %>
-    if [ -f ${DATA_DIR}/recovery.conf ]; then
-      rm ${DATA_DIR}/recovery.conf
-    fi
-  <% end %>
 
   <% unless p("databases.hooks.pre_start").empty? %>
   ${JOB_DIR}/bin/hooks/call-hooks.sh "pre-start"
