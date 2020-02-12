@@ -23,8 +23,6 @@ function main() {
 
   echo "PostgreSQL started successfully"
 
-  # create_recovery_slot_master  # fork
-
   <% unless p("databases.hooks.post_start").empty? %>
   ${JOB_DIR}/bin/hooks/call-hooks.sh "post-start"
   <% end %>
