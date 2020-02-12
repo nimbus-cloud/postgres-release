@@ -1,5 +1,5 @@
 ---
-name: 1-promote-slave
+name: one-promote-slave
 
 description: "SSH to slave node, and promote it to master status."
 
