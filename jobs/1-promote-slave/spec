@@ -2,3 +2,6 @@
 name: 1-promote-slave
 
 description: "SSH to slave node, and promote it to master status."
+
+templates:
+  errand.sh.erb: bin/run
