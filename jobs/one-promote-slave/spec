@@ -6,14 +6,6 @@ description: "SSH to slave node, and promote it to master status."
 templates:
   errand.sh.erb: bin/run
 
-
-provides:
-- name: postgres
-  type: database
-  properties:
-    databases.replication_node2
-
 properties:
   databases.replication_node2:
     description: "IP address of slave node you wishe to promote"
-    
