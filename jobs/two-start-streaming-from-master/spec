@@ -1,0 +1,18 @@
+---
+name: two-start-streaming-from-master
+
+description: "SSH from new master site into new slave node, remove $PGDATA dir (/var/vcap/store/postgres/postgres-{version}/*), then start streaming."
+
+templates:
+  errand.sh.erb: bin/run
+
+properties:
+  slave.node:
+    description: "IP address of new slave (old master) to ssh to."
+  vcap_password:
+    description: "password for vcap user to ssh in to slave node."
+  replication.user:
+    description: "Username for replicator"
+    default: "replicator"
+  master.node:
+    description: "IP of master node that you want to stream data from"
