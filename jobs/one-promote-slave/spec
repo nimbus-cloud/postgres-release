@@ -1,7 +1,7 @@
 ---
 name: one-promote-slave
 
-description: "SSH to slave node, and promote it to master status."
+description: "SSH to slave node, and promote it to has_master_conf status."
 
 templates:
   errand.sh.erb: bin/run

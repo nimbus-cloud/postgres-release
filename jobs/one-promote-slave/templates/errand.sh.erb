@@ -1,3 +1,4 @@
 #!/bin/bash
 
-ssh -o StrictHostKeyChecking=no vcap@<% p("databases.replication_node2") %> "echo ikUn5RcneiDiJYP6 | sudo -S /var/vcap/packages/postgres-11.6/bin/pg_ctl promote -D /var/vcap/store/postgres/postgres-11.6/"
+sudo apt-get install sshpass
+sshpass -p ikUn5RcneiDiJYP6 ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" vcap@<% p('databases.replication_node2') %> "/var/vcap/packages/postgres-11.6/bin/pg_ctl promote -D /var/vcap/store/postgres/postgres-11.6/"

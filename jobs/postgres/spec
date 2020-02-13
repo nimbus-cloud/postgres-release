@@ -121,8 +121,8 @@ properties:
     default: false
   
   ### Replication fork start
-  databases.master:
-    description: "Boolean: wheather or not a node is replication master"
+  databases.has_master_conf:
+    description: "Boolean: wheather or not a node is replication has_master_conf"
   databases.replication_node1:
     description: "Ip address of this machine"
   databases.replication_node2:
