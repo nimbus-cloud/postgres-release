@@ -4,7 +4,7 @@ name: one-promote-slave
 description: "SSH to slave node, and promote it to master status."
 
 templates:
-  errand.sh.erb: bin/errand.sh
+  errand.sh.erb: bin/run
 
 properties:
   databases.replication_node2:
