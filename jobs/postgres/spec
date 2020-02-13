@@ -119,20 +119,6 @@ properties:
   databases.enable_trace:
     description: "Print additional traces in control scripts"
     default: false
-  
-  ### Replication fork start
-  databases.has_master_conf:
-    description: "Boolean: wheather or not a node is replication has_master_conf"
-  databases.replication_node1:
-    description: "Ip address of this machine"
-  databases.replication_node2:
-    description: "Ip address of the other machine taking part in replication"
-  databases.replication_user:
-    description: "Replication user"
-  databases.replication_password:
-    description: "Replication password"
-  ### Replication fork end
-
   janitor.script:
     description: "If specified, janitor would periodically run this script"
     default: ''
