@@ -14,5 +14,7 @@ properties:
   replication.user:
     description: "Username for replicator"
     default: "replicator"
+  replication.password:
+    description: "Password for replicator"
   master.node:
     description: "IP of master node that you want to stream data from"

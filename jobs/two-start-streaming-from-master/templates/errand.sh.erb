@@ -2,4 +2,4 @@
 set -eu
 
 sudo apt-get install sshpass
-sshpass -p <%= p("vcap_password") %> ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" vcap@<%= p("slave.node") %> "echo "password" | /var/vcap/packages/postgres-11.6/bin/pg_basebackup -h <%= p("master.node") %> -D /var/vcap/store/postgres/postgres-11.6/ -U <%= p("replaction.user") %> -v -P -R -Xs"
+sshpass -p <%= p("vcap_password") %> ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" vcap@<%= p("slave.node") %> "echo <%= p("replication.password") %> | /var/vcap/packages/postgres-11.6/bin/pg_basebackup -h <%= p("master.node") %> -D /var/vcap/store/postgres/postgres-11.6/ -U <%= p("replaction.user") %> -v -P -R -Xs"
