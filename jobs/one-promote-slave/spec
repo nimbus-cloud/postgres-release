@@ -9,4 +9,5 @@ templates:
 properties:
   slave.node:
     description: "IP address of slave node you wish to promote"
-    
+  vcap_password:
+    descrition: "password for vcap user to ssh in to slave node."
