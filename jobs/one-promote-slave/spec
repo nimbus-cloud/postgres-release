@@ -7,5 +7,6 @@ templates:
   errand.sh.erb: bin/run
 
 properties:
-  databases.replication_node2:
-    description: "IP address of slave node you wishe to promote"
+  slave.node:
+    description: "IP address of slave node you wish to promote"
+    
