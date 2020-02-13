@@ -1,7 +1,7 @@
 ---
 name: one-promote-slave
 
-description: "SSH to slave node, and promote it to has_master_conf status."
+description: "SSH from master site to slave node, and promote. After giving it the has_master_conf."
 
 templates:
   errand.sh.erb: bin/run
@@ -10,4 +10,4 @@ properties:
   slave.node:
     description: "IP address of slave node you wish to promote"
   vcap_password:
-    descrition: "password for vcap user to ssh in to slave node."
+    description: "password for vcap user to ssh in to slave node."
