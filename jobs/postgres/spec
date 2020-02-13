@@ -132,3 +132,8 @@ properties:
   janitor.timeout:
     description: "Time limit in seconds for the janitor script. By default it's set to 0 that means no time limit"
     default: 0
+
+  ### FORK
+  databases.has_master_conf:
+    description: "Boolean: wheather or not a node is replication has_master_conf"
+  ###
