@@ -136,4 +136,9 @@ properties:
   ### FORK
   databases.has_master_conf:
     description: "Boolean: wheather or not a node is replication has_master_conf"
+  databases.replication_user:
+    description: "replication user"
+    default: "replicator"
+  databases.replication_node2:
+    description: "Slave nodes IP"
   ###
