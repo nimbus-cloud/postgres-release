@@ -20,4 +20,3 @@ properties:
     description: "IP of master node that you want to stream data from"
   postgres_version:
     description: "Postgres version so we can stay with updates"
-    

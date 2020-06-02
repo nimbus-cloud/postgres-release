@@ -13,4 +13,3 @@ properties:
     description: "password for vcap user to ssh in to slave node."
   postgres_version:
     description: "Postgres version so we can stay with updates"
-    

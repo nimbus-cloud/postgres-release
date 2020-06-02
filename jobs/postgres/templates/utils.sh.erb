@@ -24,7 +24,6 @@ function create_roles() {
     -d "postgres" -c "\set ON_ERROR_STOP on" -f "${JOB_DIR}/config/roles.sql"
 }
 
-
 function create_databases() {
   echo "Creating databases..."
   <% p("databases.databases", []).each do |database| %>
