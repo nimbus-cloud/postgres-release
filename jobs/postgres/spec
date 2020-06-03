@@ -13,7 +13,6 @@ templates:
   utils.sh.erb: bin/utils.sh
   postgresql.conf.erb: config/postgresql.conf
   pg_hba.conf.erb: config/pg_hba.conf
-  #recovery.conf.erb: config/recovery.conf
   pg_ident.conf.erb: config/pg_ident.conf
   roles.sql.erb: config/roles.sql
   server.private_key.erb: config/certificates/server.private_key
